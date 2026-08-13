@@ -100,7 +100,16 @@ export type Slot = {
 };
 
 export const SLOTS: Slot[] = [
-  { n: "A", title: "SaaS product film", label: "Landing hero", stage: "In build" },
+  {
+    n: "A",
+    title: "PULSE — analytics product film",
+    label: "Landing hero",
+    stage: "",
+    preview: "/video/saas-01-preview.mp4",
+    full: "/video/saas-01.mp4",
+    poster: "/poster/saas-01.jpg",
+    meta: "18.4s · 1920×1080 · UI build + kinetic type",
+  },
   {
     n: "B",
     title: "SARA — AI workspace launch film",
@@ -117,7 +126,7 @@ export const SLOTS: Slot[] = [
    PRICING — priced per piece, not per month.
 
    USD is the source of truth. INR is a straight conversion at the rate below,
-   rounded to the nearest thousand so it reads like a real quote rather than a
+   rounded to the nearest hundred so it reads like a real quote rather than a
    currency-converter output. Update RATE when it drifts.
    -------------------------------------------------------------------------- */
 
@@ -141,14 +150,11 @@ export type Group = {
   items: Item[];
 };
 
-/* Benchmarked against published 2026 rates, August 2026:
-     - short-form: $50–$250/video common band (Pixflow), $150–$400 professional
-     - motion graphics: $500–$2,500 for a 30s piece (Vidico); 60s studio-quality
-       explainers start ~$1,500 (Yans Media); basic motion builds ~$2,000
-       (Blue Carrot); freelance finished minute $2,000–$3,000 (D-MAK)
-     - documentary post-only sits well under full-production per-minute rates
-   Positioned at the upper-professional end of those bands, not agency rates —
-   a two-person studio without a client roster cannot defend agency pricing. */
+/* Entry pricing across all three lines, deliberately under the published 2026
+   bands (short-form commonly $50–$250/video; SaaS motion $500–$2,500 for 30s;
+   documentary post far above this per finished minute). A two-person studio
+   without a client roster wins on price and craft, not on rate card.
+   Raise these once the SaaS slots are filled and the reel has client names. */
 export const PRICING: Group[] = [
   {
     id: "shortform",
@@ -161,18 +167,13 @@ export const PRICING: Group[] = [
       {
         name: "Standard cut",
         note: "Up to 60s. Assembly, word-level captions, sourced inserts, one hook, all aspect ratios.",
-        usd: 150,
+        usd: 60,
       },
       {
-        name: "Signature cut",
-        note: "Everything above plus three written hook variants, custom on-brand graphics and a full grade.",
-        usd: 250,
+        name: "Advanced cut + motion graphics",
+        note: "Everything above plus custom on-brand motion graphics, three written hook variants and a full grade.",
+        usd: 130,
         pick: true,
-      },
-      {
-        name: "Performance cut",
-        note: "Signature plus paid-social variants, three thumbnail options and a retention read on the previous batch.",
-        usd: 375,
       },
     ],
   },
@@ -187,23 +188,18 @@ export const PRICING: Group[] = [
       {
         name: "Feature explainer",
         note: "Up to 30 seconds. Script pass, storyboard, custom vector build, VO sync and sound design.",
-        usd: 1200,
+        usd: 400,
       },
       {
         name: "Product explainer",
         note: "60 seconds. Full narrative build, isometric dashboard UI, custom camera choreography.",
-        usd: 2200,
+        usd: 500,
         pick: true,
       },
       {
         name: "Homepage hero film",
         note: "90 seconds. The flagship piece — the one that anchors the site and the launch.",
-        usd: 3400,
-      },
-      {
-        name: "Brand motion system",
-        note: "One-time build. Easing curves, type stack, transition grammar, sound signature. Everything after inherits it.",
-        usd: 4500,
+        usd: 600,
       },
     ],
   },
@@ -218,18 +214,18 @@ export const PRICING: Group[] = [
       {
         name: "Customer story",
         note: "Up to 2 minutes. Story structure, grade, mix, lower thirds, plus three social cutdowns.",
-        usd: 1400,
+        usd: 500,
       },
       {
         name: "Founder film",
         note: "2–4 minutes. Archival integration, custom title package, six cutdowns.",
-        usd: 2800,
+        usd: 650,
         pick: true,
       },
       {
         name: "Long-form documentary",
         note: "6–10 minutes. Full paper edit, sound design, licensed score, nine cutdowns.",
-        usd: 5500,
+        usd: 800,
         from: true,
       },
     ],
@@ -240,9 +236,9 @@ export const ADDONS = [
   { name: "Rush delivery, under 48h", usd: "+35%" },
   { name: "Source files released", usd: "+30%" },
   { name: "Perpetual buyout", usd: "+25%" },
-  { name: "Extra revision round", usd: "$95" },
-  { name: "Additional language", usd: "$120" },
-  { name: "Runtime beyond scope", usd: "$35/sec" },
+  { name: "Extra revision round", usd: "$25" },
+  { name: "Additional language", usd: "$35" },
+  { name: "Runtime beyond scope", usd: "$4/sec" },
 ];
 
 export const PEOPLE = [

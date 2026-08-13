@@ -3,35 +3,14 @@
 Next.js 16 (App Router, TypeScript) + GSAP + Lenis. Static export —
 `npm run build` emits a plain folder that drops onto any host.
 
-**Dark is the default.** Six themes ship, stored in `localStorage` under
-`ks-theme`; no stored value means dark. Theme is deliberately *not* wired to
-`prefers-color-scheme`, so a first-time visitor always sees the intended design.
+**One theme, no switcher.** Ground `#070707`, accent `#DFFF00` (18:1 on the
+ground, so `--ember-ink` is black — never put white on the accent). All tokens
+live in the single `:root` block at the top of `globals.css`; there is no
+`data-theme` attribute and nothing reads `prefers-color-scheme`.
 
-| slug | ground | accent | notes |
-|---|---|---|---|
-| `dark` | `#08080A` | `#FF5A1F` | default |
-| `light` | `#EEEEEA` | `#D63C10` | the only light ground |
-| `blood` | `#080808` | `#E10600` | phonk / cinematic |
-| `acid` | `#050505` | `#B6FF00` | graffiti / street |
-| `toxic` | `#090908` | `#7A00FF` + `#D6FF00` | two accents |
-| `yellow` | `#070707` | `#DFFF00` | streetwear |
-
-Swap between them with the round swatch button in the nav. These are audition
-palettes — pick one and you can delete the other blocks from `globals.css`, or
-keep the picker if you want visitors to have it.
-
-`--ember-2` is a second accent. It equals `--ember` in every theme except
-`toxic`, where it carries the acid yellow. Only `.shead__n` (the 01–05 section
-numbers) reads it, so nothing changes in the other five.
-
-**Contrast caveat on `toxic`:** `#7A00FF` on `#090908` is **3.10:1**. That
-clears the 3:1 bar for large display type but not the 4.5:1 one for the small
-uppercase accent labels (`.person__role`, `.pgroup__kicker`, `.card__idx`). If
-toxic wins, either lighten the purple to about `#9B3BFF` or point those three
-selectors at `--ember-2`.
-
-`blood`'s given mid-grey `#5A5A5A` was only 2.9:1 on its ground, so `--steel`
-is lifted to `#787878` (4.54:1) rather than used verbatim.
+`--ember-2` is a second accent slot that currently equals `--ember`. Only
+`.shead__n` (the 01–05 section numbers) reads it — set it to a different colour
+there if you ever want a two-accent scheme.
 
 ```bash
 npm run dev      # http://localhost:3000
@@ -43,9 +22,9 @@ npm run build    # static site into ./out
 ```
 app/layout.tsx        fonts, metadata, theme boot script
 app/page.tsx          the page — hero, services, studio, process, contact
-app/globals.css       all styling, both themes
+app/globals.css       all styling + the single :root palette
 components/Motion.tsx Lenis + GSAP: intro, reveals, pinned rail, cursor, marquee
-components/Nav.tsx    desktop nav, mobile menu, theme + USD/INR switches
+components/Nav.tsx    desktop nav, mobile menu, USD/INR switch
 components/Work.tsx   horizontal work rail, lazy previews, lightbox
 components/Pricing.tsx per-piece pricing, live currency conversion
 lib/data.ts           ALL content + prices live here
@@ -64,9 +43,13 @@ Priced **per piece, not per month** — three groups (Short-form, Motion graphic
 for SaaS, Documentary & brand film) plus scope-change surcharges.
 
 USD is the source of truth. INR is derived at `USD_TO_INR` in `lib/data.ts`
-(currently **88**) and rounded to the nearest thousand so it reads like a quote
+(currently **88**) and rounded to the nearest hundred so it reads like a quote
 rather than a converter output. **Update that constant when the rate drifts** —
 nothing fetches a live rate, deliberately, so your prices never move on their own.
+
+All three lines are entry-priced, below the published market bands, to win the
+first clients. Raise them once the SaaS slots are filled and the reel carries
+client names.
 
 ## Video
 
@@ -133,8 +116,17 @@ slots have a `preview` set — see `PIPE_COPY` in `components/Work.tsx`. Nothing
 to hand-edit as the films land, and the page can't end up claiming both are
 still in build when one has shipped.
 
-Slot B is filled: **SARA — AI workspace launch film** (`saas-02.*`, 13.5s,
-3840×2160 master, −14.6 LUFS). Slot A is still the placeholder.
+Both slots are filled:
+
+| Slot | Film | Files | Master |
+|---|---|---|---|
+| A | **PULSE — analytics product film** | `saas-01.*` | 18.4s, 1920×1080 @30, −14.5 LUFS |
+| B | **SARA — AI workspace launch film** | `saas-02.*` | 13.5s, 3840×2160 @24, −14.6 LUFS |
+
+Nothing in `SLOTS` is a placeholder now, so `PIPE_COPY` is on its third
+variant. Adding a third film means adding a fourth entry to `PIPE_COPY` —
+`Math.min(..., 2)` clamps to the last one, so the copy would otherwise go stale
+silently.
 
 ## Motion
 
@@ -180,11 +172,13 @@ browserslist — the production bundle has them.
   Pushpahas as "Edit & creative direction" and Ragavendhra as "Motion & design"
   because that's the usual split. Correct them if wrong — it's the only claim on
   the page I couldn't verify.
-- `hello@kinesmith.com` — swap for the real address (`app/page.tsx`, two spots).
-- The three social links in the contact section are `href="#"`. Point them
-  somewhere or remove them.
 - `metadataBase` in `app/layout.tsx` points at `https://kinesmith.com`. Register
-  the domain before publishing.
+  the domain before publishing — or change it to wherever this actually lands.
+- **Contact is a Gmail address and two Indian mobile numbers.** For a studio
+  selling to US SaaS companies that is a visible tell. A domain address on the
+  registered domain is the single cheapest credibility fix available.
+- **No social links.** The contact section links WhatsApp only. Add LinkedIn and
+  Instagram to `.contact__alt` in `app/page.tsx` when the accounts exist.
 - **Piece 05 is a WhatsApp-compressed 720×1280 file** — noticeably softer than
   the other four. Re-encode from the real master when you have it.
 - **Watch the loader and the pinned rail on a real focused window.** They were

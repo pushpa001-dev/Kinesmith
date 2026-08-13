@@ -46,7 +46,6 @@ export default function Page() {
       <main id="top">
         {/* ---------------- hero ---------------- */}
         <section className="hero">
-          <div className="hero__glow" aria-hidden="true" />
           <div className="hero__grid">
             <div>
               <p className="eyebrow" data-a="fade">
@@ -239,15 +238,20 @@ export default function Page() {
               className="btn btn--primary btn--lg magnet"
               data-a="fade"
               data-cursor="Mail"
-              href="mailto:hello@kinesmith.com?subject=Re-cut%20my%20first%2015%20seconds"
+              href="mailto:kinesmith21@gmail.com?subject=Re-cut%20my%20first%2015%20seconds"
             >
-              <span>hello@kinesmith.com</span>
+              <span>kinesmith21@gmail.com</span>
               <Arrow />
             </a>
             <p className="contact__alt" data-a="fade">
-              Or find us on{" "}
-              <a href="#">LinkedIn</a>, <a href="#">Instagram</a>,{" "}
-              <a href="#">Vimeo</a>.
+              Or message us on WhatsApp —{" "}
+              <a href="https://wa.me/919392047174" target="_blank" rel="noreferrer">
+                +91 93920 47174
+              </a>{" "}
+              or{" "}
+              <a href="https://wa.me/916302756369" target="_blank" rel="noreferrer">
+                +91 63027 56369
+              </a>.
             </p>
           </div>
         </section>

@@ -112,7 +112,6 @@ export default function Motion({ children }: { children: React.ReactNode }) {
         .to(".hero .eyebrow", { opacity: 1, y: 0, duration: 0.8 }, 0.12)
         .to(heroLines, { yPercent: 0, duration: 1.35, stagger: 0.08 }, 0.2)
         .to(player, { opacity: 1, y: 0, scale: 1, duration: 1.4 }, 0.4)
-        .to(".hero__glow", { opacity: 1, duration: 1.6, ease: "power2.out" }, 0.4)
         .to(".hero__sub", { opacity: 1, y: 0, duration: 0.9 }, 0.72)
         .to(".hero__cta", { opacity: 1, y: 0, duration: 0.9 }, 0.82)
         .to(".stats", { opacity: 1, y: 0, duration: 0.9, onStart: counters }, 0.92);
@@ -148,18 +147,7 @@ export default function Motion({ children }: { children: React.ReactNode }) {
         });
       }
 
-      /* ---------- hero: pointer bloom + scroll-out ---------- */
-      const hero = document.querySelector<HTMLElement>(".hero");
-      if (hero && window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
-        gsap.set(hero, { "--mx": 50, "--my": 38 });
-        const mx = gsap.quickTo(hero, "--mx", { duration: 0.9, ease: "power3" });
-        const my = gsap.quickTo(hero, "--my", { duration: 0.9, ease: "power3" });
-        hero.addEventListener("mousemove", (e) => {
-          const b = hero.getBoundingClientRect();
-          mx(((e.clientX - b.left) / b.width) * 100);
-          my(((e.clientY - b.top) / b.height) * 100);
-        });
-      }
+      /* ---------- hero: scroll-out ---------- */
       gsap.to(".hero__grid", {
         opacity: 0.16,
         y: -60,
