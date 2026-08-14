@@ -30,7 +30,13 @@ export default function Nav() {
         .timeline({ defaults: { ease: "expo.out" } })
         .set(el, { display: "flex" })
         .fromTo(el, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.85 })
-        .fromTo(items, { yPercent: 118 }, { yPercent: 0, duration: 0.95, stagger: 0.07 }, 0.2)
+        // items resolve rather than sliding out from behind a clipped edge
+        .fromTo(
+          items,
+          { opacity: 0, y: 22, filter: "blur(9px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.06 },
+          0.2
+        )
         .fromTo(".menu__foot", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.5);
     } else {
       lenis?.start();
@@ -111,8 +117,14 @@ export default function Nav() {
           </span>
         </a>
         <div className="menu__foot mono">
-          <span>kinesmith21@gmail.com</span>
-          <span>Motion, forged.</span>
+          <a href="mailto:kinesmith21@gmail.com">kinesmith21@gmail.com</a>
+          <a
+            href="https://www.instagram.com/kinesmith_"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Instagram
+          </a>
         </div>
       </div>
     </>

@@ -160,8 +160,7 @@ export const PRICING: Group[] = [
     id: "shortform",
     label: "Short-form",
     kicker: "Per video",
-    blurb:
-      "Cut from footage you already have. Priced by how much craft the piece needs, not by a monthly quota you may not use.",
+    blurb: "Cut from footage you already have. Priced by craft, not by quota.",
     unit: "per video",
     items: [
       {
@@ -181,8 +180,7 @@ export const PRICING: Group[] = [
     id: "motion",
     label: "Motion graphics — SaaS",
     kicker: "Per video",
-    blurb:
-      "Built frame by frame against your product, not dropped into a template. Custom vector, isometric UI, real easing.",
+    blurb: "Built against your product, not dropped into a template.",
     unit: "per video",
     items: [
       {
@@ -207,8 +205,7 @@ export const PRICING: Group[] = [
     id: "doc",
     label: "Documentary &amp; brand film",
     kicker: "Per film",
-    blurb:
-      "You shoot, we build the story. Paper edit, assembly, grade, sound and titles — cutdown pack included in every one.",
+    blurb: "You shoot, we build the story. Cutdown pack in every one.",
     unit: "per film",
     items: [
       {
@@ -247,13 +244,13 @@ export const PEOPLE = [
     name: "Pushpahas",
     // NOTE: confirm these two role lines — they are an assumption, not a fact.
     role: "Edit & creative direction",
-    line: "Decides what the first three seconds are. Cuts the retention pass, writes the hook variants, and owns the standard every piece ships against.",
+    line: "Decides what the first three seconds are. Cuts the retention pass and owns the standard every piece ships against.",
   },
   {
     index: "02",
     name: "Ragavendhra",
     role: "Motion & design",
-    line: "Builds the motion system — type, easing, transitions, sound signature — then everything downstream inherits it and gets faster.",
+    line: "Builds the motion system — type, easing, transitions, sound. Everything downstream inherits it and gets faster.",
   },
 ];
 
@@ -261,26 +258,26 @@ export const SERVICES = [
   {
     num: "L1",
     title: "Short-form",
-    body: "Reels, Shorts and TikTok cut from your long-form. Three hooks written per video so you know which one to run. Word-level captions, sourced inserts, platform-correct exports.",
+    body: "Reels, Shorts and TikTok cut from your long-form. Three hooks written per video, so you know which one to run.",
     tags: ["Podcast repurposing", "Hook variants", "Caption systems", "Paid cutdowns"],
   },
   {
     num: "L2",
     title: "Motion systems",
-    body: "The part a model cannot copy. Your own easing curves, type stack, transition grammar and sound signature — built once, inherited by everything after it.",
+    body: "The part a model cannot copy. Your own easing, type stack and sound signature — built once, inherited by everything after.",
     tags: ["Brand motion kit", "Product explainers", "UI & Lottie", "Data viz"],
   },
   {
     num: "L3",
     title: "Documentary post",
-    body: "You shoot, we build the story. Paper edit, assembly, grade, sound and title package — plus the cutdown pack that turns one film into nine shorts.",
+    body: "You shoot, we build the story. Paper edit, grade, sound and titles — plus the pack that turns one film into nine shorts.",
     tags: ["Founder films", "Customer stories", "Grade & mix", "Cutdown packs"],
   },
 ];
 
 export const STEPS = [
-  { n: "01", t: "Brief", p: "You send footage and what the piece has to do. We come back with scope and a fixed price before anything starts." },
-  { n: "02", t: "Build", p: "First cut inside the agreed turnaround. Two revision rounds per stage, consolidated and in writing." },
-  { n: "03", t: "Ship", p: "Master plus every aspect ratio you need, colour and loudness correct for the platform it lands on." },
-  { n: "04", t: "Read", p: "We go through retention curves and hook drop-off with you, then cut the next piece against what actually held." },
+  { n: "01", t: "Brief", p: "You send footage and what the piece has to do. Scope and a fixed price before anything starts." },
+  { n: "02", t: "Build", p: "First cut inside the agreed turnaround. Two revision rounds per stage, in writing." },
+  { n: "03", t: "Ship", p: "Master plus every aspect ratio, colour and loudness correct for the platform." },
+  { n: "04", t: "Read", p: "We go through retention and hook drop-off, then cut the next piece against what held." },
 ];

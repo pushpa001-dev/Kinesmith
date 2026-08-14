@@ -25,19 +25,19 @@ const PIPE_COPY = [
     eyebrow: "Reserved",
     l1: "Two SaaS product films,",
     l2: "mid-build.",
-    note: "16:9, landing-page length. These frames are held for them — they drop straight in here the day they ship.",
+    note: "16:9, landing-page length. Both frames drop straight in here the day they ship.",
   },
   {
     eyebrow: "SaaS product films",
     l1: "One shipped.",
     l2: "One still in build.",
-    note: "16:9, landing-page length. The second frame is held — it fills the day that film ships.",
+    note: "16:9, landing-page length. The second frame fills the day that film ships.",
   },
   {
     eyebrow: "SaaS product films",
     l1: "Built frame by frame",
     l2: "against the product.",
-    note: "16:9, landing-page length. Custom vector, real easing, sound designed to the cut — not a template with your logo dropped in.",
+    note: "16:9, landing-page length. Custom vector, real easing, sound designed to the cut.",
   },
 ];
 
@@ -98,13 +98,13 @@ export default function WorkSection() {
             Selected work
           </p>
           <h2 className="h2 lines">
-            <span className="l"><i>Every frame</i></span>
-            <span className="l"><i>decided by a person.</i></span>
+            <span className="l">Every frame</span>
+            <span className="l">decided by a person.</span>
           </h2>
         </div>
         <p className="shead__note" data-a="fade">
-          Click any piece to watch it with sound. The numbers under each one are
-          measured from the delivered master with ffprobe — not estimated.
+          Click any piece to watch it with sound. Every runtime below is
+          measured from the delivered master, not estimated.
         </p>
       </header>
 
@@ -184,8 +184,8 @@ export default function WorkSection() {
             {copy.eyebrow}
           </p>
           <h3 className="pipe__h lines">
-            <span className="l"><i>{copy.l1}</i></span>
-            <span className="l"><i>{copy.l2}</i></span>
+            <span className="l">{copy.l1}</span>
+            <span className="l">{copy.l2}</span>
           </h3>
           <p className="pipe__note" data-a="fade">{copy.note}</p>
         </header>

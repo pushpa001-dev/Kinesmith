@@ -17,6 +17,50 @@ import Lenis from "lenis";
  *    listens to Lenis, Lenis is stepped by gsap.ticker, and lag smoothing is off
  *    so a dropped frame doesn't teleport the page.
  */
+/**
+ * Wraps each word of a line in a plain inline-block span and returns them.
+ *
+ * Nothing clips. The words are revealed with opacity, a short lift and a blur
+ * that resolves — there is no overflow:hidden anywhere in the chain, so no
+ * mask edge is ever visible and descenders and accents can never be cut.
+ *
+ * Element children (the accent span) are moved in whole rather than descended
+ * into, so their styling survives the split.
+ */
+function splitWords(line: HTMLElement): HTMLElement[] {
+  if (line.dataset.split) {
+    return Array.from(line.querySelectorAll<HTMLElement>(".w"));
+  }
+  const out: HTMLElement[] = [];
+  const frag = document.createDocumentFragment();
+
+  const push = (content: Node | string) => {
+    const w = document.createElement("span");
+    w.className = "w";
+    if (typeof content === "string") w.textContent = content;
+    else w.appendChild(content);
+    frag.appendChild(w);
+    out.push(w);
+  };
+
+  Array.from(line.childNodes).forEach((n) => {
+    if (n.nodeType === Node.TEXT_NODE) {
+      // keep the gaps as real text nodes so words can still wrap normally
+      (n.textContent || "").split(/(\s+)/).forEach((tok) => {
+        if (!tok) return;
+        if (!tok.trim()) frag.appendChild(document.createTextNode(" "));
+        else push(tok);
+      });
+    } else {
+      push(n.cloneNode(true));
+    }
+  });
+
+  line.replaceChildren(frag);
+  line.dataset.split = "1";
+  return out;
+}
+
 export default function Motion({ children }: { children: React.ReactNode }) {
   const scope = useRef<HTMLDivElement>(null);
 
@@ -67,7 +111,17 @@ export default function Motion({ children }: { children: React.ReactNode }) {
     const ctx = gsap.context(() => {
       const q = gsap.utils.toArray as <T>(s: string) => T[];
 
-      const lineInners = q<HTMLElement>(".lines .l > i");
+      /* Every heading is split once, up front, so nothing reflows mid-scroll.
+         WORDS.get(headingEl) is the ordered word list for that heading. */
+      const WORDS = new Map<HTMLElement, HTMLElement[]>();
+      q<HTMLElement>(".lines").forEach((h) => {
+        const words: HTMLElement[] = [];
+        h.querySelectorAll<HTMLElement>(".l").forEach((line) =>
+          words.push(...splitWords(line))
+        );
+        WORDS.set(h, words);
+      });
+      const lineInners = [...WORDS.values()].flat();
       const fades = q<HTMLElement>("[data-a='fade']");
       const cards = q<HTMLElement>("[data-a='card']");
       const rows = q<HTMLElement>("[data-a='row']");
@@ -81,13 +135,21 @@ export default function Motion({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      /* ---------- initial states ---------- */
-      gsap.set(lineInners, { yPercent: 116 });
-      gsap.set(q<HTMLElement>(".person__name > span"), { yPercent: 110 });
-      gsap.set(fades, { opacity: 0, y: 22 });
-      gsap.set(rows, { opacity: 0, y: 28 });
-      gsap.set(steps, { opacity: 0, y: 28 });
-      gsap.set(prows, { opacity: 0, y: 22 });
+      /* ---------- initial states ----------
+         Words resolve out of a blur rather than sliding out from behind a
+         mask edge. Travel is deliberately short — long slides are what make a
+         page read as a template, because the eye tracks the movement instead
+         of the words. The blur does the work the distance used to. */
+      gsap.set(lineInners, { opacity: 0, y: 20, filter: "blur(10px)" });
+      gsap.set(q<HTMLElement>(".person__name > span"), {
+        opacity: 0,
+        y: 20,
+        filter: "blur(10px)",
+      });
+      gsap.set(fades, { opacity: 0, y: 10 });
+      gsap.set(rows, { opacity: 0, y: 14 });
+      gsap.set(steps, { opacity: 0, y: 14 });
+      gsap.set(prows, { opacity: 0, y: 10 });
       // the work items wipe up rather than fade — it reads like a cut, not a dissolve
       const pick = (c: HTMLElement, sel: string) => c.querySelector(sel) ?? [];
       cards.forEach((c) => {
@@ -104,17 +166,25 @@ export default function Motion({ children }: { children: React.ReactNode }) {
       });
       if (player) gsap.set(player, { opacity: 0, y: 44, scale: 0.96 });
 
-      /* ---------- intro ---------- */
-      const heroLines = q<HTMLElement>(".hero__h1 .l > i");
+      /* ---------- intro ----------
+         power3.out, not expo.out. expo covers 90% of the distance in the first
+         fifth of its duration, which is what gives a page that snapped-then-
+         drifted feel. power3 keeps moving through the middle and settles. */
+      const heroH1 = document.querySelector<HTMLElement>(".hero__h1");
+      const heroWords = (heroH1 && WORDS.get(heroH1)) || [];
       const intro = gsap
-        .timeline({ defaults: { ease: "expo.out" }, paused: true })
-        .from(".nav", { y: -24, opacity: 0, duration: 0.95 }, 0)
-        .to(".hero .eyebrow", { opacity: 1, y: 0, duration: 0.8 }, 0.12)
-        .to(heroLines, { yPercent: 0, duration: 1.35, stagger: 0.08 }, 0.2)
-        .to(player, { opacity: 1, y: 0, scale: 1, duration: 1.4 }, 0.4)
-        .to(".hero__sub", { opacity: 1, y: 0, duration: 0.9 }, 0.72)
-        .to(".hero__cta", { opacity: 1, y: 0, duration: 0.9 }, 0.82)
-        .to(".stats", { opacity: 1, y: 0, duration: 0.9, onStart: counters }, 0.92);
+        .timeline({ defaults: { ease: "power3.out" }, paused: true })
+        .from(".nav", { y: -18, opacity: 0, duration: 1 }, 0)
+        .to(".hero .eyebrow", { opacity: 1, y: 0, duration: 0.9 }, 0.15)
+        .to(
+          heroWords,
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.3, stagger: 0.055 },
+          0.22
+        )
+        .to(player, { opacity: 1, y: 0, scale: 1, duration: 1.5 }, 0.42)
+        .to(".hero__sub", { opacity: 1, y: 0, duration: 1 }, 0.78)
+        .to(".hero__cta", { opacity: 1, y: 0, duration: 1 }, 0.88)
+        .to(".stats", { opacity: 1, y: 0, duration: 1, onStart: counters }, 0.98);
 
       /* The loader hands off via ks:ready. Three guards so the hero can never be
          left hidden: a flag in case the event already fired, a listener for the
@@ -155,19 +225,23 @@ export default function Motion({ children }: { children: React.ReactNode }) {
         scrollTrigger: { trigger: ".hero", start: "50% top", end: "bottom top", scrub: 0.8 },
       });
 
-      /* ---------- headings ---------- */
-      q<HTMLElement>(".lines").forEach((h) => {
-        if (h.closest(".hero")) return;
+      /* ---------- headings ----------
+         Words arrive 40ms apart, which at reading distance reads as one
+         settling gesture rather than a queue of separate slides. */
+      WORDS.forEach((words, h) => {
+        if (h.closest(".hero") || !words.length) return;
         ScrollTrigger.create({
           trigger: h,
-          start: "top 86%",
+          start: "top 88%",
           once: true,
           onEnter: () =>
-            gsap.to(h.querySelectorAll(".l > i"), {
-              yPercent: 0,
+            gsap.to(words, {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
               duration: 1.2,
-              ease: "expo.out",
-              stagger: 0.09,
+              ease: "power3.out",
+              stagger: 0.05,
             }),
         });
       });
@@ -183,11 +257,11 @@ export default function Motion({ children }: { children: React.ReactNode }) {
       };
       batch(
         fades.filter((f) => !f.closest(".hero")),
-        { opacity: 1, y: 0, duration: 0.95, ease: "expo.out", stagger: 0.07 }
+        { opacity: 1, y: 0, duration: 1.1, ease: "power2.out", stagger: 0.06 }
       );
-      batch(rows, { opacity: 1, y: 0, duration: 1, ease: "expo.out", stagger: 0.1 });
-      batch(steps, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.08 });
-      batch(prows, { opacity: 1, y: 0, duration: 0.85, ease: "expo.out", stagger: 0.06 });
+      batch(rows, { opacity: 1, y: 0, duration: 1.15, ease: "power3.out", stagger: 0.08 });
+      batch(steps, { opacity: 1, y: 0, duration: 1, ease: "power3.out", stagger: 0.07 });
+      batch(prows, { opacity: 1, y: 0, duration: 0.95, ease: "power2.out", stagger: 0.05 });
 
       /* work items: whole rail wipes in on one trigger, so the stagger reads as
          one gesture instead of firing per-card off-screen inside the pin */
@@ -198,9 +272,9 @@ export default function Motion({ children }: { children: React.ReactNode }) {
           start: "top 82%",
           once: true,
           onEnter: () => {
-            const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
             cards.forEach((c, i) => {
-              const at = i * 0.09;
+              const at = i * 0.08;
               tl.to(pick(c, ".card__media, .slot__frame"), {
                 clipPath: "inset(0% 0% 0% 0%)",
                 duration: 1.25,
@@ -262,9 +336,13 @@ export default function Motion({ children }: { children: React.ReactNode }) {
           once: true,
           onEnter: () => {
             gsap
-              .timeline({ defaults: { ease: "expo.out" } })
+              .timeline({ defaults: { ease: "power3.out" } })
               .to(p.querySelector(".person__i"), { opacity: 1, duration: 0.5 }, 0)
-              .to(p.querySelector(".person__name > span"), { yPercent: 0, duration: 1.2 }, 0.05)
+              .to(
+                p.querySelector(".person__name > span"),
+                { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2 },
+                0.05
+              )
               .to(
                 [p.querySelector(".person__role"), p.querySelector(".person__line")],
                 { opacity: 1, y: 0, duration: 0.85, stagger: 0.08 },
@@ -399,8 +477,10 @@ export default function Motion({ children }: { children: React.ReactNode }) {
           trigger: rail,
           start: "top bottom",
           end: "bottom top",
+          // ±2.5, not ±6 — at six degrees the lean is the thing you notice
+          // instead of the work, which is the wrong way round
           onUpdate: (self) =>
-            skew(gsap.utils.clamp(-6, 6, (self.getVelocity() / -260))),
+            skew(gsap.utils.clamp(-2.5, 2.5, self.getVelocity() / -420)),
         });
 
         return () => {
