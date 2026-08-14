@@ -1,0 +1,222 @@
+# Logo clearance report — `Downloads/stitch/screen.png`
+
+Checked 13 August 2026, on your machine, via Chrome. Covers file forensics,
+reverse image search, visual-similarity search, and the US trademark register.
+
+**I am not a lawyer and this is not legal advice.** Everything below is a
+factual finding you can verify yourself, plus my read on what it means for the
+brand. The ownership question at the end is the one worth paying a professional
+about.
+
+---
+
+## Verdict in one line
+
+**Low risk of infringing anyone. High risk of not being ownable, and weak as a
+mark.** Nothing suggests it copies an existing logo — but the file is
+cryptographically signed as AI-generated, it reads to image search as a generic
+racing decal, and it is technically unusable as a real logo in its current form.
+
+| Question | Answer |
+|---|---|
+| Does it copy an existing logo? | No evidence it does |
+| Is the name `Kinesmith` clear? | Yes, on the US register |
+| Can you legally use it? | Google's terms permit it |
+| Can you **own** it? | Probably not — see §4 |
+| Is it usable as a logo file? | **No** — see §5 |
+| Does it fit this brand? | **No** — see §6 |
+
+---
+
+## 1. What the file actually is
+
+The PNG carries a **C2PA content-credentials manifest** (`caBX` chunk, 14,128
+bytes) signed by Google. Decoded, it states verbatim:
+
+```
+c2pa.created
+  description:       "Created by Google Generative AI."
+  digitalSourceType: http://cv.iptc.org/newscodes/digitalsourcetype/
+                     trainedAlgorithmicMedia
+  ...                "SynthID watermark."
+```
+
+Signing chain: `Google LLC` → `Google C2PA Media Services 1P ICA G3` →
+`Google C2PA Root CA G3`. Certificate issued 2026-02-17.
+
+The folder name (`stitch`) and filename (`screen.png`) match a Google Stitch
+export. The EXIF block additionally carries Google's `Picasa` software tag, and
+the file is a 1024×1024 JPEG re-wrapped as PNG — the standard shape of a
+generative image output.
+
+**This is not an inference.** It is a signed, tamper-evident declaration from
+Google embedded in the file, plus an invisible **SynthID** watermark. Anyone can
+drag the file onto `contentcredentials.org/verify` and read it in about five
+seconds. SynthID is designed to survive cropping, resizing and re-encoding, so
+exporting a "clean" copy does not change what the image is — it only removes the
+label, which is worse than leaving it.
+
+You described this as designed by you. If you wrote the prompt and picked the
+result, that is real creative direction — but it is not what the file records,
+and the file is what anyone else can check.
+
+---
+
+## 2. Reverse image search — TinEye
+
+Uploaded the image to TinEye (which explicitly does not save or index search
+images).
+
+> **0 matches** across 85.3 billion indexed images.
+
+**Reading:** this exact image does not appear anywhere online. That rules out
+the worst case — that it was lifted from an existing brand or a stock listing.
+It does *not* rule out resemblance to an existing mark, because TinEye matches
+near-duplicates, not concepts.
+
+---
+
+## 3. Visual similarity — Google Lens
+
+Google Lens matches by visual concept, so this is the meaningful test. Every
+single top result fell into one genre:
+
+| Source | What it matched |
+|---|---|
+| Vecteezy | "Neon yellow and white abstract racing stripes on black" |
+| Vecteezy | "Racing geometry car wrap sticker design background" |
+| VectorStock | "Dynamic Yellow Racing Logo" |
+| Pngtree | "Abstract Racing Background Stripes With Yellow White…" |
+| Shutterstock | "Racing Background Vector Design Unique Stripe" |
+| Amazon.in / IndiaMART | Bike graphic sticker kits — Pulsar, NTORQ, TVS Victor |
+| Seeklogo | Honda XLR 125 logo |
+
+**No established company's logo was returned. Lens did not identify it as any
+known brand.** That is good news for infringement risk.
+
+But read the other half of that result: Google's visual matcher classified your
+brand mark as a **car-wrap decal**. Not as a logo — as stock automotive vinyl.
+The genre is one of the most saturated in commercial graphics, with thousands of
+royalty-free near-neighbours on every stock site.
+
+That is the real finding here. Not "you copied someone." Rather: **the shape
+language is so common that it carries no ownership signal.** A mark whose job is
+to say *this studio and no other* is currently saying *sport bike sticker*.
+
+---
+
+## 4. Can you own it?
+
+Two separate questions that get confused constantly.
+
+**Google's terms — permissive.** The current Google Terms of Service state:
+*"Your content remains yours, which means that you retain any intellectual
+property rights that you have in your content."* Google is not claiming your
+output and does not restrict commercial use.
+
+Note the exact wording: *any rights **that you have***. Google is granting you
+whatever you already own. It is not — and cannot be — granting copyright.
+
+**US copyright law — the problem.** The US Copyright Office has published
+sustained guidance that material generated by AI without sufficient human
+authorship is not protected by copyright:
+
+- *Copyright Registration Guidance for Works Containing AI-Generated Materials*,
+  88 Fed. Reg. 16,190 (Mar. 16, 2023)
+- *Report on Copyright and AI, Part 2: Copyrightability* (Jan. 29, 2025)
+- *Thaler v. Perlmutter*
+
+Practical consequence: if a competitor copies this mark, your ability to stop
+them on copyright grounds is doubtful, and the C2PA manifest in your own file is
+the evidence they would use.
+
+**Trademark is a different regime** and more favourable — it protects marks that
+identify a source, and does not turn on human authorship the way copyright does.
+Registering `Kinesmith` as a wordmark is likely available to you regardless of
+how the logo was made. **Confirm this with a trademark attorney before relying
+on it** — it is the one point here where the nuance actually pays.
+
+---
+
+## 5. It does not work as a logo file
+
+Independent of everything above, this file cannot do a logo's job:
+
+- **Raster, not vector.** 1024×1024 PNG. A logo needs to be an SVG that stays
+  crisp on a business card, an invoice, a 24px favicon and a video end-card.
+- **No transparency.** Colour type 2, RGB, no alpha — the black background is
+  baked into the pixels. It cannot be placed on any other colour.
+- **Fails small.** The mark is built from a dozen interleaved thin slivers. At
+  favicon size those merge into an illegible smear. Shrink it to 24px and look.
+- **Fails in one colour.** No usable single-colour version for embroidery,
+  stamps, invoices, or a client's "logos of our vendors" strip.
+- **Carries generation noise.** There is visible grain in the white shapes — a
+  vector logo has none.
+
+---
+
+## 6. It is wrong for *this* brand — the biggest problem
+
+Your entire site argues one thing. The work section header is literally **"Every
+frame decided by a person."** The hero, the services copy, and the pricing page
+all rest on human craft being the thing a model cannot do.
+
+Putting a logo on that page which ships with a Google certificate reading
+*"Created by Google Generative AI"* undercuts the only claim the brand has.
+
+This is not hypothetical exposure. A prospect, a competitor or anyone curious can
+download the mark from your site and verify its provenance in seconds. For a
+studio selling *human judgment*, being caught out on the logo is disproportionate
+damage — it is the one inconsistency that makes a buyer re-read everything else
+sceptically.
+
+Aesthetically it also does not match. The site is precise, editorial, grading-
+suite: tight-tracked Inter Black, hairline rules, a rationed acid accent. The
+mark is esports/motorsport — aggressive diagonal shards. The yellow matches;
+nothing else does. The wordmark you already have in the nav (Kinesmith set in
+Inter Black with the small accent dot) is considerably more on-brand than this.
+
+---
+
+## 7. What I would do
+
+1. **Do not ship this file as the logo.** Not for legal reasons — for the three
+   above: unownable, unusable at size, and it contradicts the pitch.
+2. **Keep it as a mood reference.** The energy and the colour are fine. The
+   direction is not the problem; the artefact is.
+3. **Get an original vector drawn.** Either draw it yourself in Figma or
+   Illustrator, or commission it — a simple wordmark plus monogram from a
+   competent designer is $150–$600, roughly one Advanced short-form cut. Because
+   you drew or commissioned it, you own it, it scales, and it survives the
+   provenance question permanently.
+4. **Lean on the wordmark.** `Kinesmith` returned **zero results on the USPTO
+   register** — live *and* dead — and the search was verified working (`kinesis`
+   returns 90 on the same query). A clean, distinctive, available name is worth
+   more than any mark; that is the asset to protect.
+5. **Register `kinesmith.com`** before anything else. `metadataBase` in
+   `app/layout.tsx` already points there.
+6. **If you keep any AI-assisted asset, say so or don't use it.** Given what this
+   brand sells, quiet is the worst option.
+
+---
+
+## Method, so you can re-run any of it
+
+| Check | Tool | Result |
+|---|---|---|
+| File provenance | PNG chunk decode, C2PA/JUMBF manifest | Google Generative AI, SynthID |
+| Duplicate search | tineye.com, image uploaded | 0 / 85.3B |
+| Similarity search | lens.google.com, image uploaded | Racing decals / stock vinyl only |
+| US trademark, name | tmsearch.uspto.gov, wordmark `kinesmith` | 0 live, 0 dead |
+| Search validity control | same, wordmark `kinesis` | 90 results — search confirmed working |
+| Usage rights | policies.google.com/terms | "Your content remains yours" |
+| Copyrightability | copyright.gov/ai | Guidance + Part 2 report + Thaler |
+
+**Not checked:** the Indian trademark register (IP India's public search is
+captcha-gated and I don't complete captchas), EUIPO, and design-patent registers.
+If you intend to trademark in India, that search is worth running yourself or
+through an agent.
+
+The image was uploaded to TinEye and Google Lens to run the two searches — that
+was the only way to check it against the internet. TinEye states it does not save
+search images; Google Lens uploads are not published or indexed.

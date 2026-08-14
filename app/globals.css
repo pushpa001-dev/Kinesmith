@@ -1,26 +1,26 @@
 /* ==========================================================================
    KINESMITH
-   Dark is the ground state — the page is a grading suite, the work is the only
-   lit thing in it. Light is opt-in via the toggle.
+   One theme: near-black ground, acid yellow accent. The page is a grading
+   suite, the work is the only lit thing in it.
    Two families: Inter (display, Black 900 + tracked labels) / DM Sans (text).
    ========================================================================== */
 
 :root{
-  /* dark = default */
-  --bg:#08080A;          /* room */
-  --bg-2:#0C0C0F;        /* recessed panel */
-  --card:#121216;        /* lifted surface */
-  --ink:#F2F2EE;
-  --ink-2:#B9BABF;
-  --steel:#75777F;
-  --rule:#1C1C21;
-  --rule-2:#2A2A31;
-  --ember:#FF5A1F;
-  --ember-ink:#0A0A0B;
-  /* only the two-accent themes split these; elsewhere the second accent is the
-     first one, so .shead__n can read --ember-2 unconditionally */
+  --bg:#070707;          /* room */
+  --bg-2:#0B0B0B;        /* recessed panel */
+  --card:#111111;        /* lifted surface */
+  --ink:#F5F5F5;
+  --ink-2:#BDBDBD;
+  --steel:#7A7A7A;
+  --rule:#1D1D1D;
+  --rule-2:#303030;
+  /* #DFFF00 is 18:1 on this ground, so black sits on it, never white */
+  --ember:#DFFF00;
+  --ember-ink:#0A0A0A;
+  /* kept as its own token — .shead__n reads it, and a second accent can be
+     introduced here without touching every call site */
   --ember-2:var(--ember);
-  --glow:rgba(255,90,31,.16);
+  --glow:rgba(223,255,0,.16);
 
   --pad:clamp(20px,4.4vw,64px);
   --rail:clamp(0px,6.2vw,104px);
@@ -32,74 +32,6 @@
   --sh-1:0 2px 6px rgba(0,0,0,.5), 0 24px 54px -34px #000;
   --sh-2:0 4px 12px rgba(0,0,0,.6), 0 64px 110px -50px #000;
 
-  color-scheme:dark;
-}
-
-:root[data-theme="light"]{
-  --bg:#EEEEEA; --bg-2:#E5E5DF; --card:#FBFBF9;
-  --ink:#0F0F10; --ink-2:#35363C; --steel:#6A6D74;
-  --rule:#DBDBD4; --rule-2:#C2C2BA;
-  --ember:#D63C10; --ember-ink:#FFFFFF; --ember-2:var(--ember);
-  --glow:rgba(214,60,16,.10);
-  --sh-1:0 1px 1px rgba(17,17,18,.03), 0 14px 34px -26px rgba(17,17,18,.42);
-  --sh-2:0 2px 4px rgba(17,17,18,.05), 0 44px 84px -44px rgba(17,17,18,.5);
-  color-scheme:light;
-}
-
-/* ---------- audition palettes ------------------------------------------
-   All four are dark grounds, so they keep the default's shadow recipe and
-   only restate it to stop anything leaking in from :root. Each palette ships
-   3–4 colours; the greys between them are interpolated on the dark theme's
-   ladder (bg-2 +4, card +10, rule +20, rule-2 +34 off the ground).
-   --ember-ink is picked per accent by contrast, not by taste. */
-
-/* blood — white on #E10600 clears 4.9:1, black only 4.2:1 */
-:root[data-theme="blood"]{
-  --bg:#080808; --bg-2:#0C0C0C; --card:#121212;
-  --ink:#F2F2F2; --ink-2:#B9B9B9; --steel:#787878;
-  --rule:#1C1C1C; --rule-2:#2A2A2A;
-  --ember:#E10600; --ember-ink:#FFFFFF; --ember-2:var(--ember);
-  --glow:rgba(225,6,0,.16);
-  --sh-1:0 2px 6px rgba(0,0,0,.5), 0 24px 54px -34px #000;
-  --sh-2:0 4px 12px rgba(0,0,0,.6), 0 64px 110px -50px #000;
-  color-scheme:dark;
-}
-
-/* acid — the palette's #292929 lands exactly on the rule-2 rung */
-:root[data-theme="acid"]{
-  --bg:#050505; --bg-2:#0A0A0A; --card:#101010;
-  --ink:#EAEAEA; --ink-2:#B2B2B2; --steel:#757575;
-  --rule:#1A1A1A; --rule-2:#292929;
-  --ember:#B6FF00; --ember-ink:#0A0A0A; --ember-2:var(--ember);
-  --glow:rgba(182,255,0,.16);
-  --sh-1:0 2px 6px rgba(0,0,0,.5), 0 24px 54px -34px #000;
-  --sh-2:0 4px 12px rgba(0,0,0,.6), 0 64px 110px -50px #000;
-  color-scheme:dark;
-}
-
-/* toxic — two accents: purple carries everything, the acid yellow is rationed
-   to the section numbers so it reads as a signal rather than a second theme.
-   Ground is a hair warm (#090908) and the greys follow it. */
-:root[data-theme="toxic"]{
-  --bg:#090908; --bg-2:#0D0D0C; --card:#131312;
-  --ink:#EFEFEB; --ink-2:#B8B8B8; --steel:#787874;
-  --rule:#1D1D1B; --rule-2:#2B2B28;
-  --ember:#7A00FF; --ember-ink:#FFFFFF; --ember-2:#D6FF00;
-  --glow:rgba(122,0,255,.16);
-  --sh-1:0 2px 6px rgba(0,0,0,.5), 0 24px 54px -34px #000;
-  --sh-2:0 4px 12px rgba(0,0,0,.6), 0 64px 110px -50px #000;
-  color-scheme:dark;
-}
-
-/* yellow — #DFFF00 is the brightest accent here at 18:1 against black */
-:root[data-theme="yellow"]{
-  --bg:#070707; --bg-2:#0B0B0B; --card:#111111;
-  --ink:#F5F5F5; --ink-2:#BDBDBD; --steel:#7A7A7A;
-  --rule:#1D1D1D; --rule-2:#303030;
-  --ember:#DFFF00; --ember-ink:#0A0A0A; --ember-2:var(--ember);
-  --glow:rgba(223,255,0,.16);
-  --sh-1:0 2px 6px rgba(0,0,0,.5), 0 24px 54px -34px #000;
-  --sh-2:0 4px 12px rgba(0,0,0,.6), 0 64px 110px -50px #000;
   color-scheme:dark;
 }
 
@@ -157,8 +89,6 @@ h1,h2,h3{
   66%{transform:translate(4%,2%)} 83%{transform:translate(-4%,1%)}
   100%{transform:translate(0,0)}
 }
-:root[data-theme="light"] .grain{ opacity:.04; mix-blend-mode:multiply; }
-
 /* ---------- custom cursor (fine pointers only) ----------
    NB: not .cur — that class is the currency symbol in the price rows. */
 .cursor{ position:fixed; top:0; left:0; z-index:450; pointer-events:none; opacity:0; }
@@ -218,44 +148,6 @@ h1,h2,h3{
 
 .nav__right{ display:flex; align-items:center; gap:9px; }
 @media(max-width:1040px){ .nav__links{ display:none; } .nav .btn--sm{ display:none; } }
-
-.iconbtn{
-  width:36px; height:36px; border-radius:50%; border:1px solid var(--rule-2);
-  display:grid; place-items:center; flex:none;
-  transition:border-color .4s var(--e-soft), background .4s var(--e-soft);
-}
-.iconbtn:hover{ border-color:var(--ember); background:color-mix(in srgb,var(--ember) 10%,transparent); }
-.themedot{
-  width:13px; height:13px; border-radius:50%;
-  background:linear-gradient(135deg, var(--ink) 0 50%, transparent 50%);
-  border:1.5px solid var(--ink);
-}
-
-/* ---------- theme picker ----------
-   Lives in .nav__right, which survives the 1040px collapse, so the burger
-   never hides it. Anchored to the trigger rather than the top layer — the
-   nav is already a stacking context and a popover would escape it. */
-.tpick{ position:relative; }
-.tpick__pop{
-  position:absolute; top:calc(100% + 10px); right:0; z-index:210;
-  display:grid; gap:2px; min-width:178px; padding:6px;
-  background:var(--bg-2); border:1px solid var(--rule-2);
-  border-radius:14px; box-shadow:var(--sh-2);
-}
-.tpick__o{
-  display:flex; align-items:center; gap:10px; width:100%;
-  padding:8px 10px; border-radius:9px; text-align:left; color:var(--ink-2);
-  font-family:var(--f-disp); font-size:10.5px; font-weight:500;
-  letter-spacing:.11em; text-transform:uppercase;
-  transition:background .35s var(--e-soft), color .35s var(--e-soft);
-}
-.tpick__o:hover{ background:color-mix(in srgb,var(--ember) 12%,transparent); color:var(--ink); }
-.tpick__o[aria-pressed="true"]{ color:var(--ink); }
-.tpick__o[aria-pressed="true"]::after{
-  content:""; margin-left:auto; width:5px; height:5px; border-radius:50%; background:var(--ember);
-}
-/* swatch is ground + accent split on the same diagonal as .themedot */
-.tpick__sw{ width:15px; height:15px; border-radius:50%; flex:none; border:1px solid var(--rule-2); }
 
 /* burger */
 .burger{ display:none; width:36px; height:36px; border-radius:50%; border:1px solid var(--rule-2); place-items:center; flex:none; }
@@ -344,11 +236,6 @@ body.loading{ overflow:hidden; }
   padding:clamp(118px,14vh,182px) var(--pad) clamp(44px,7vh,92px);
 }
 /* soft ember bloom that tracks the pointer — reads like a practical light */
-.hero__glow{
-  position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0;
-  /* --mx/--my are plain numbers so GSAP can tween them without unit parsing */
-  background:radial-gradient(440px circle at calc(var(--mx,50) * 1%) calc(var(--my,38) * 1%), var(--glow), transparent 68%);
-}
 .hero__grid{
   position:relative; z-index:1;
   display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,.55fr);

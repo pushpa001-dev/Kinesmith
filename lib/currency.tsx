@@ -23,9 +23,10 @@ type Ctx = {
 
 const CurrencyCtx = createContext<Ctx | null>(null);
 
-/** INR is rounded to the nearest thousand so it reads as a quote, not a conversion. */
+/** INR is rounded to the nearest hundred so it reads as a quote, not a
+ *  conversion. Not the nearest thousand — at a $60 line that rounds off 5%. */
 function toINR(usd: number) {
-  return Math.round((usd * USD_TO_INR) / 1000) * 1000;
+  return Math.round((usd * USD_TO_INR) / 100) * 100;
 }
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {

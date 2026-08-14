@@ -35,21 +35,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08080A",
+  themeColor: "#070707",
 };
-
-/* Runs before paint so a returning visitor never sees the wrong theme flash.
-   Dark is the default, so only a stored preference needs applying. */
-const themeBoot = `(function(){try{var t=localStorage.getItem('ks-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
-      </head>
+    <html lang="en">
       <body className={`${display.variable} ${text.variable}`}>
         <CurrencyProvider>{children}</CurrencyProvider>
       </body>

@@ -1,19 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useCurrency } from "@/lib/currency";
-
-/* swatch colours are duplicated from globals.css on purpose — the chips have
-   to show a theme the page is not currently wearing, so they can't use var() */
-const THEMES = [
-  { id: "dark", label: "Dark", bg: "#08080A", ac: "#FF5A1F" },
-  { id: "light", label: "Light", bg: "#EEEEEA", ac: "#D63C10" },
-  { id: "blood", label: "Blood", bg: "#080808", ac: "#E10600" },
-  { id: "acid", label: "Acid", bg: "#050505", ac: "#B6FF00" },
-  { id: "toxic", label: "Toxic", bg: "#090908", ac: "#7A00FF" },
-  { id: "yellow", label: "Yellow", bg: "#070707", ac: "#DFFF00" },
-];
 
 const LINKS = [
   { href: "#work", label: "Work", n: "01" },
@@ -27,40 +16,6 @@ export default function Nav() {
   const { cur, setCur } = useCurrency();
   const [open, setOpen] = useState(false);
   const menu = useRef<HTMLDivElement>(null);
-
-  const [theme, setTheme] = useState("dark");
-  const [tOpen, setTOpen] = useState(false);
-  const tpick = useRef<HTMLDivElement>(null);
-
-  /* the pre-paint script in layout.tsx has already applied the stored theme,
-     so read it off the element rather than touching localStorage twice */
-  useEffect(() => {
-    // no attribute means the default, and the default is dark
-    setTheme(document.documentElement.getAttribute("data-theme") || "dark");
-  }, []);
-
-  const pickTheme = useCallback((id: string) => {
-    document.documentElement.setAttribute("data-theme", id);
-    setTheme(id);
-    setTOpen(false);
-    try {
-      localStorage.setItem("ks-theme", id);
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    if (!tOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setTOpen(false);
-    const onDown = (e: PointerEvent) => {
-      if (!tpick.current?.contains(e.target as Node)) setTOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("pointerdown", onDown);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("pointerdown", onDown);
-    };
-  }, [tOpen]);
 
   /* the menu is a real overlay, so scrolling behind it has to stop */
   useEffect(() => {
@@ -122,40 +77,6 @@ export default function Nav() {
             </button>
           </div>
 
-          <div className="tpick" ref={tpick}>
-            <button
-              className="iconbtn"
-              type="button"
-              aria-expanded={tOpen}
-              aria-haspopup="true"
-              aria-label="Colour theme"
-              onClick={() => setTOpen((v) => !v)}
-            >
-              <span className="themedot" aria-hidden="true" />
-            </button>
-
-            {tOpen && (
-              <div className="tpick__pop" role="group" aria-label="Colour theme">
-                {THEMES.map((t) => (
-                  <button
-                    key={t.id}
-                    className="tpick__o"
-                    type="button"
-                    aria-pressed={theme === t.id}
-                    onClick={() => pickTheme(t.id)}
-                  >
-                    <span
-                      className="tpick__sw"
-                      aria-hidden="true"
-                      style={{ background: `linear-gradient(135deg, ${t.bg} 0 50%, ${t.ac} 50%)` }}
-                    />
-                    {t.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
           <a className="btn btn--sm magnet" href="#contact">
             <span>Start a project</span>
           </a>
@@ -190,7 +111,7 @@ export default function Nav() {
           </span>
         </a>
         <div className="menu__foot mono">
-          <span>hello@kinesmith.com</span>
+          <span>kinesmith21@gmail.com</span>
           <span>Motion, forged.</span>
         </div>
       </div>
