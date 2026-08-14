@@ -16,14 +16,13 @@ export default function Pricing() {
             Pricing
           </p>
           <h2 className="h2 lines">
-            <span className="l"><i>Per video.</i></span>
-            <span className="l"><i>Not per month.</i></span>
+            <span className="l">Per video.</span>
+            <span className="l">Not per month.</span>
           </h2>
         </div>
         <p className="shead__note" data-a="fade">
-          You pay for the pieces you actually want made. No retainer to fill, no
-          unused quota, no minimum term — and the price is on the page so neither
-          of us wastes a call finding out we&rsquo;re far apart.
+          No retainer, no unused quota, no minimum term. The price is on the page
+          so neither of us wastes a call finding out we&rsquo;re far apart.
         </p>
       </header>
 
@@ -86,8 +85,7 @@ export default function Pricing() {
             <span className="pgroup__kicker mono">Applied per piece</span>
           </div>
           <p className="pgroup__blurb">
-            Quoted upfront, never discovered on the invoice. Two revision rounds
-            per stage are included in every price above.
+            Quoted upfront, never discovered on the invoice.
           </p>
           <ul className="addons">
             {ADDONS.map((a) => (
@@ -99,15 +97,9 @@ export default function Pricing() {
           </ul>
           <p className="pricenote">
             {cur === "INR" ? (
-              <>
-                Indian pricing converted from USD at ₹{USD_TO_INR} = $1 and rounded.
-                Invoices are issued in INR at the rate on the day of quoting.
-              </>
+              <>Converted at ₹{USD_TO_INR} = $1. Invoiced at the rate on the day of quoting.</>
             ) : (
-              <>
-                All prices in USD. Indian clients can switch the toggle above —
-                we invoice in INR at the rate on the day of quoting.
-              </>
+              <>All prices in USD. Indian clients can switch the toggle above.</>
             )}
           </p>
         </div>

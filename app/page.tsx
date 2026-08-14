@@ -56,9 +56,9 @@ export default function Page() {
               </p>
 
               <h1 className="hero__h1 lines">
-                <span className="l"><i>The first</i></span>
-                <span className="l"><i><span className="accent">three seconds</span></i></span>
-                <span className="l"><i>decide everything.</i></span>
+                <span className="l">The first</span>
+                <span className="l"><span className="accent">three seconds</span></span>
+                <span className="l">decide everything.</span>
               </h1>
 
               <p className="hero__sub" data-a="fade">
@@ -137,8 +137,8 @@ export default function Page() {
                 <span className="dot" aria-hidden="true" />What we make
               </p>
               <h2 className="h2 lines">
-                <span className="l"><i>Three lines.</i></span>
-                <span className="l"><i>One standard.</i></span>
+                <span className="l">Three lines.</span>
+                <span className="l">One standard.</span>
               </h2>
             </div>
           </header>
@@ -168,14 +168,13 @@ export default function Page() {
                 <span className="dot" aria-hidden="true" />The studio
               </p>
               <h2 className="h2 lines">
-                <span className="l"><i>Two people.</i></span>
-                <span className="l"><i>That&rsquo;s the whole studio.</i></span>
+                <span className="l">Two people.</span>
+                <span className="l">That&rsquo;s the whole studio.</span>
               </h2>
             </div>
             <p className="shead__note" data-a="fade">
-              No account layer, no junior queue, no one to hand your footage down
-              to. The person who answers your message is the person cutting your
-              video.
+              No account layer, no junior queue. The person who answers your
+              message is the person cutting your video.
             </p>
           </header>
 
@@ -200,8 +199,8 @@ export default function Page() {
                 <span className="dot" aria-hidden="true" />How it runs
               </p>
               <h2 className="h2 lines">
-                <span className="l"><i>Four steps.</i></span>
-                <span className="l"><i>No surprises.</i></span>
+                <span className="l">Four steps.</span>
+                <span className="l">No surprises.</span>
               </h2>
             </div>
           </header>
@@ -226,13 +225,12 @@ export default function Page() {
               <span className="dot" aria-hidden="true" />Next step
             </p>
             <h2 className="contact__h lines">
-              <span className="l"><i>Send us one video</i></span>
-              <span className="l"><i>you weren&rsquo;t happy with.</i></span>
+              <span className="l">Send us one video</span>
+              <span className="l">you weren&rsquo;t happy with.</span>
             </h2>
             <p className="contact__p" data-a="fade">
-              We&rsquo;ll re-cut the first fifteen seconds and send it back — no
-              charge, no call required. If it&rsquo;s better, we&rsquo;ll talk
-              about the rest.
+              We&rsquo;ll re-cut the first fifteen seconds and send it back. No
+              charge, no call. If it&rsquo;s better, we talk about the rest.
             </p>
             <a
               className="btn btn--primary btn--lg magnet"
@@ -244,14 +242,20 @@ export default function Page() {
               <Arrow />
             </a>
             <p className="contact__alt" data-a="fade">
-              Or message us on WhatsApp —{" "}
+              <span>WhatsApp</span>
               <a href="https://wa.me/919392047174" target="_blank" rel="noreferrer">
                 +91 93920 47174
-              </a>{" "}
-              or{" "}
+              </a>
               <a href="https://wa.me/916302756369" target="_blank" rel="noreferrer">
                 +91 63027 56369
-              </a>.
+              </a>
+              <a
+                href="https://www.instagram.com/kinesmith_"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Instagram
+              </a>
             </p>
           </div>
         </section>
